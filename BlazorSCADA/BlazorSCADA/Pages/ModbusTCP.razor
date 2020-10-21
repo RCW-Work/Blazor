@@ -1,0 +1,84 @@
+﻿@page "/ModbusTCP"
+@using BlazorSCADA.ModbusTCP
+
+
+<h3>ModbusTCP</h3>
+<div>
+
+    <input type="text" class="text-dark" text="Error" @bind="ErrorMsg" />
+    <input type="button" class="btn-danger" value="Connect" @onclick="()=>Connect()" />
+    <input type="button" class="btn-danger" value="GetData" @onclick="()=>GetData()" />
+    <input type="text" class="text-dark" text="999" @bind="rcvData">
+</div>
+
+@code {
+
+    public string rcvData;
+    private byte[] data = new byte[1024];
+    string ErrorMsg;
+
+    private ModbusServerService MBmaster;
+    private ModbusMaster tempMaster;
+
+    private void MBmaster_OnException(ushort id, byte unit, byte function, byte exception)
+    {
+        string exc = "Modbus says error: ";
+        switch (exception)
+        {
+            case ModbusServerService.excIllegalFunction: exc += "Illegal function!"; break;
+            case ModbusServerService.excIllegalDataAdr: exc += "Illegal data adress!"; break;
+            case ModbusServerService.excIllegalDataVal: exc += "Illegal data value!"; break;
+            case ModbusServerService.excSlaveDeviceFailure: exc += "Slave device failure!"; break;
+            case ModbusServerService.excAck: exc += "Acknoledge!"; break;
+            case ModbusServerService.excGatePathUnavailable: exc += "Gateway path unavailbale!"; break;
+            case ModbusServerService.excExceptionTimeout: exc += "Slave timed out!"; break;
+            case ModbusServerService.excExceptionConnectionLost: exc += "Connection is lost!"; break;
+            case ModbusServerService.excExceptionNotConnected: exc += "Not connected!"; break;
+        }
+        ErrorMsg = exc;
+    }
+
+    private void MBmaster_OnResponseData(ushort ID, byte unit, byte function, byte[] values)
+    {
+        // ------------------------------------------------------------------------
+        // Identify requested data
+        switch (ID)
+        {
+            case 1:
+                data = values;
+                break;
+            case 2:
+                data = values;
+                break;
+            case 3:
+                data = values;
+                break;
+            case 4:
+                data = values;
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+        }
+    }
+
+
+    private void Connect()
+    {
+        MBmaster = new ModbusServerService("127.0.0.1", 502, true);
+        MBmaster.OnResponseData += new ModbusServerService.ResponseData(MBmaster_OnResponseData);
+        MBmaster.OnException += new ModbusServerService.ExceptionData(MBmaster_OnException);
+    }
+
+    private void GetData()
+    {
+
+        MBmaster.ReadHoldingRegister(3, 2, 1, 20);
+        rcvData = data[0].ToString();
+    }
+}
