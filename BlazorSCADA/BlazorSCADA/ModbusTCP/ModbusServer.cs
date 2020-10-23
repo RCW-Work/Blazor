@@ -17,7 +17,7 @@ namespace BlazorSCADA.ModbusTCP
         public ushort slavePort { get; set; }
 
         public bool isConnect = false;
-        public ModbusTCP.ModbusServerService MBmaster { get; set; }
+        public ModbusTCP.ModbusService.Server MBmaster { get; set; }
 
 
     }

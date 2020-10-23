@@ -49,3 +49,4 @@ D:\GitHub-Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\Blazo
 D:\GitHub-Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\BlazorSCADA.pdb
 D:\GitHub-Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\BlazorSCADA.genruntimeconfig.cache
 D:\GitHub-Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\BlazorSCADA.csproj.CopyComplete
+D:\GitHub-Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\BlazorSCADA.csprojAssemblyReference.cache

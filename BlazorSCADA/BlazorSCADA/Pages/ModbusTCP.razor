@@ -2,22 +2,60 @@
 @using BlazorSCADA.ModbusTCP
 
 
+
 <h3>ModbusTCP</h3>
 <div>
+    <table class="table-bordered">
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>Data   </th>
+                <th>Address</th>
+                <th>Data   </th>
+                <th>Address</th>
+                <th>Data   </th>
+                <th>Address</th>
+                <th>Data   </th>
+            </tr>
+        </thead>
+        <tbody>
 
-    <input type="text" class="text-dark" text="Error" @bind="ErrorMsg" />
+
+            @for (int i = 0; i < tRow; i++)
+            {
+                <tr>
+                    <td>@(i)</td>
+                    <td>@rcvData[i]</td>
+                    <td>@(tRow*1+i)</td>
+                    <td>@rcvData[tRow * 1 + i]</td>
+                    <td>@(tRow * 2+i)</td>
+                    <td>@rcvData[tRow * 2 + i]</td>
+                    <td>@(tRow * 3+i)</td>
+                    <td>@rcvData[tRow * 3 + i]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<div>
+
+    <input type="text" class="text-dark" text="Error" @bind="ErrMsg" />
     <input type="button" class="btn-danger" value="Connect" @onclick="()=>Connect()" />
     <input type="button" class="btn-danger" value="GetData" @onclick="()=>GetData()" />
-    <input type="text" class="text-dark" text="999" @bind="rcvData">
 </div>
 
 @code {
+    public int tRow = 16;
+    public int tCol = 4;
+    private ModbusService.Server MBmaster;
+    private byte[] rcvData = new byte[2048];
 
-    public string rcvData;
-    private byte[] data = new byte[1024];
-    string ErrorMsg;
 
-    private ModbusServerService MBmaster;
+    string ErrMsg;
+
     private ModbusMaster tempMaster;
 
     private void MBmaster_OnException(ushort id, byte unit, byte function, byte exception)
@@ -25,17 +63,18 @@
         string exc = "Modbus says error: ";
         switch (exception)
         {
-            case ModbusServerService.excIllegalFunction: exc += "Illegal function!"; break;
-            case ModbusServerService.excIllegalDataAdr: exc += "Illegal data adress!"; break;
-            case ModbusServerService.excIllegalDataVal: exc += "Illegal data value!"; break;
-            case ModbusServerService.excSlaveDeviceFailure: exc += "Slave device failure!"; break;
-            case ModbusServerService.excAck: exc += "Acknoledge!"; break;
-            case ModbusServerService.excGatePathUnavailable: exc += "Gateway path unavailbale!"; break;
-            case ModbusServerService.excExceptionTimeout: exc += "Slave timed out!"; break;
-            case ModbusServerService.excExceptionConnectionLost: exc += "Connection is lost!"; break;
-            case ModbusServerService.excExceptionNotConnected: exc += "Not connected!"; break;
+            case ModbusService.Server.excIllegalFunction: exc += "Illegal function!"; break;
+            case ModbusService.Server.excIllegalDataAdr: exc += "Illegal data adress!"; break;
+            case ModbusService.Server.excIllegalDataVal: exc += "Illegal data value!"; break;
+            case ModbusService.Server.excSlaveDeviceFailure: exc += "Slave device failure!"; break;
+            case ModbusService.Server.excAck: exc += "Acknoledge!"; break;
+            case ModbusService.Server.excGatePathUnavailable: exc += "Gateway path unavailbale!"; break;
+            case ModbusService.Server.excExceptionTimeout: exc += "Slave timed out!"; break;
+            case ModbusService.Server.excExceptionConnectionLost: exc += "Connection is lost!"; break;
+            case ModbusService.Server.excExceptionNotConnected: exc += "Not connected!"; break;
+
         }
-        ErrorMsg = exc;
+        ErrMsg = exc;
     }
 
     private void MBmaster_OnResponseData(ushort ID, byte unit, byte function, byte[] values)
@@ -45,16 +84,16 @@
         switch (ID)
         {
             case 1:
-                data = values;
+                rcvData = values;
                 break;
             case 2:
-                data = values;
+                rcvData = values;
                 break;
             case 3:
-                data = values;
+                rcvData = values;
                 break;
             case 4:
-                data = values;
+                rcvData = values;
                 break;
             case 5:
                 break;
@@ -70,15 +109,17 @@
 
     private void Connect()
     {
-        MBmaster = new ModbusServerService("127.0.0.1", 502, true);
-        MBmaster.OnResponseData += new ModbusServerService.ResponseData(MBmaster_OnResponseData);
-        MBmaster.OnException += new ModbusServerService.ExceptionData(MBmaster_OnException);
+        MBmaster = new ModbusService.Server("127.0.0.1", 502, true);
+        MBmaster.OnResponseData += new ModbusService.Server.ResponseData(MBmaster_OnResponseData);
+        MBmaster.OnException += new ModbusService.Server.ExceptionData(MBmaster_OnException);
     }
 
-    private void GetData()
+    async Task GetData()
     {
 
-        MBmaster.ReadHoldingRegister(3, 2, 1, 20);
-        rcvData = data[0].ToString();
+        MBmaster.ReadHoldingRegister(3, 4, 0, 100);
+        await Task.Delay(10);
+        StateHasChanged();       
+
     }
 }
