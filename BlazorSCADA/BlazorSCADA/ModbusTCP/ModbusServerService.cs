@@ -179,18 +179,14 @@ namespace BlazorSCADA.ModbusTCP
                     // ----------------------------------------------------------------
                     // Connect asynchronous client
                     tcpAsyCl = new Socket(IPAddress.Parse(ip).AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
                     tcpAsyCl.Connect(new IPEndPoint(IPAddress.Parse(ip), port));
-
-
-                    //tcpAsyCl.Connect(new IPEndPoint(IPAddress.Parse(ip), port));
                     tcpAsyCl.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, _timeout);
                     tcpAsyCl.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, _timeout);
                     tcpAsyCl.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.NoDelay, 1);
                     // ----------------------------------------------------------------
                     // Connect synchronous client
                     if (!_no_sync_connection)
-                    {
+                    { 
                         tcpSynCl = new Socket(IPAddress.Parse(ip).AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                         tcpSynCl.Connect(new IPEndPoint(IPAddress.Parse(ip), port));
                         tcpSynCl.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, _timeout);
@@ -199,11 +195,12 @@ namespace BlazorSCADA.ModbusTCP
                     }
                     _connected = true;
                 }
-                //catch (System.IO.IOException error)
+
                 catch (SocketException error)
+                //catch (System.IO.IOException error)
                 {
                     _connected = false;
-                    throw (error);
+                    Console.WriteLine(error);
                 }
             }
 

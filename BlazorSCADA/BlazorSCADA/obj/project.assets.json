@@ -8,19 +8,23 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Richard Wu\\.nuget\\packages\\": {}
+    "C:\\Users\\Richard\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub-Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
+      "projectUniqueName": "D:\\GitHub_Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
       "projectName": "BlazorSCADA",
-      "projectPath": "D:\\GitHub-Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
-      "packagesPath": "C:\\Users\\Richard Wu\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub-Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\obj\\",
+      "projectPath": "D:\\GitHub_Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
+      "packagesPath": "C:\\Users\\Richard\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub_Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Richard Wu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Richard\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -61,7 +65,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
