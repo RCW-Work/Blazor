@@ -1,44 +1,41 @@
-﻿@page "/ModbusTCP"
+﻿@page "/modbus"
 @using BlazorSCADA.ModbusTCP
 
 
 
-<h3>ModbusTCP</h3>
+<h3>ModbusTCP Server</h3>
+
 <div>
-    <table class="table-bordered">
-        <thead>
-            <tr>
-                <th>Address</th>
-                <th>Data   </th>
-                <th>Address</th>
-                <th>Data   </th>
-                <th>Address</th>
-                <th>Data   </th>
-                <th>Address</th>
-                <th>Data   </th>
+    <table style="table-layout:fixed " >
+        <thead class="table-dark" align="center" >
+            <tr >
+                <th width="100px">Index</th>
+                <th width="100px">Data</th>
+                <th width="100px">Index</th>
+                <th width="100px">Data</th>
+                <th width="100px">Index</th>
+                <th width="100px">Data</th>
+                <th width="100px">Index</th>
+                <th width="100px">Data</th>
             </tr>
         </thead>
-        <tbody>
-
-
+        <tbody class="table-bordered">
             @for (int i = 0; i < tRow; i++)
             {
                 <tr>
                     <td>@(i)</td>
-                    <td>@rcvData[i]</td>
+                    <td><input type="text" name="array[]" value="@rcvData[i]" /></td>
                     <td>@(tRow*1+i)</td>
-                    <td>@rcvData[tRow * 1 + i]</td>
+                    <td><input type="text" name="array[]" value="@rcvData[tRow * 1 + i]" /></td>
                     <td>@(tRow * 2+i)</td>
-                    <td>@rcvData[tRow * 2 + i]</td>
+                    <td><input type="text" name="array[]" value="@rcvData[tRow * 2 + i]" /></td>
                     <td>@(tRow * 3+i)</td>
-                    <td>@rcvData[tRow * 3 + i]</td>
+                    <td><input type="text" name="array[]" value="@rcvData[tRow * 3 + i]" /></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
-
 
 <div>
 
@@ -50,6 +47,7 @@
 @code {
     public int tRow = 16;
     public int tCol = 4;
+    private ModbusService Service;
     private ModbusService.Server MBmaster;
     private byte[] rcvData = new byte[2048];
 
@@ -109,17 +107,26 @@
 
     private void Connect()
     {
-        MBmaster = new ModbusService.Server("127.0.0.1", 502, true);
+        //MBmaster = new ModbusService.Server("127.0.0.1", 502,true);
+        MBmaster = new ModbusService.Server();
+        MBmaster.connect("127.0.0.1", 502, true);
+
         MBmaster.OnResponseData += new ModbusService.Server.ResponseData(MBmaster_OnResponseData);
         MBmaster.OnException += new ModbusService.Server.ExceptionData(MBmaster_OnException);
     }
 
     async Task GetData()
     {
-
-        MBmaster.ReadHoldingRegister(3, 4, 0, 100);
-        await Task.Delay(10);
-        StateHasChanged();       
+        if (MBmaster != null)
+        {
+            MBmaster.ReadHoldingRegister(3, 4, 0, 100);
+            await Task.Delay(10);
+            StateHasChanged();
+        }
+        else
+        {
+            return;
+        }
 
     }
 }
