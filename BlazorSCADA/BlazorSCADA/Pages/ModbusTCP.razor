@@ -6,50 +6,88 @@
 <h3>ModbusTCP Server</h3>
 
 <div>
-    <table style="table-layout:fixed " >
-        <thead class="table-dark" align="center" >
-            <tr >
-                <th width="100px">Index</th>
-                <th width="100px">Data</th>
-                <th width="100px">Index</th>
-                <th width="100px">Data</th>
-                <th width="100px">Index</th>
-                <th width="100px">Data</th>
-                <th width="100px">Index</th>
-                <th width="100px">Data</th>
+    <table>
+        <thead>
+            <tr>
+                <th>SlaveIP</th>
+                <th>PortNumber</th>
+                <th>BTN</th>
             </tr>
         </thead>
-        <tbody class="table-bordered">
-            @for (int i = 0; i < tRow; i++)
-            {
-                <tr>
-                    <td>@(i)</td>
-                    <td><input type="text" name="array[]" value="@rcvData[i]" /></td>
-                    <td>@(tRow*1+i)</td>
-                    <td><input type="text" name="array[]" value="@rcvData[tRow * 1 + i]" /></td>
-                    <td>@(tRow * 2+i)</td>
-                    <td><input type="text" name="array[]" value="@rcvData[tRow * 2 + i]" /></td>
-                    <td>@(tRow * 3+i)</td>
-                    <td><input type="text" name="array[]" value="@rcvData[tRow * 3 + i]" /></td>
-                </tr>
-            }
+        <tbody>
+            <tr>
+                <td><input class="text-black-50" @bind="slaveIP" /></td>
+                <td><input class="text-black-50" @bind="portNum" /></td>
+                <td><input type="button" class="btn-danger" value="Connect" @onclick="()=>Connect()" /></td>
+            </tr>
         </tbody>
     </table>
+    <label>Error Message @ErrMsg</label><br />
+
 </div>
+
 
 <div>
-
-    <input type="text" class="text-dark" text="Error" @bind="ErrMsg" />
-    <input type="button" class="btn-danger" value="Connect" @onclick="()=>Connect()" />
-    <input type="button" class="btn-danger" value="GetData" @onclick="()=>GetData()" />
+    @if (MBmaster == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+<div>
+    <input type="button" class="btn-danger" value="GetData" @onclick="()=>GetData()" /><br />
+    <input type="button" class="btn-danger" value="Polling" @onclick="()=>PollingData()" /><br />
+    <input type="button" class="btn-block" value="StopPolling" @onclick="()=>StopPolling()" /><br />
 </div>
+
+        <table style="table-layout:fixed ">
+            <thead class="table-dark" align="center">
+                <tr>
+                    <th width="100px">Index</th>
+                    <th width="100px">Data</th>
+                    <th width="100px">Index</th>
+                    <th width="100px">Data</th>
+                    <th width="100px">Index</th>
+                    <th width="100px">Data</th>
+                    <th width="100px">Index</th>
+                    <th width="100px">Data</th>
+                </tr>
+            </thead>
+            <tbody class="table-bordered">
+                @for (int i = 0; i < tRow; i++)
+                {
+                    <tr>
+                        <td>@(i)</td>
+                        <td><input type="text" name="array[]" value="@(rcvData[i]<<8|rcvData[i+1])" /></td>
+                        <td>@(tRow*1+i)</td>
+                        <td><input type="text" name="array[]" value="@rcvData[tRow * 1 + i]" /></td>
+                        <td>@(tRow * 2+i)</td>
+                        <td><input type="text" name="array[]" value="@rcvData[tRow * 2 + i]" /></td>
+                        <td>@(tRow * 3+i)</td>
+                        <td><input type="text" name="array[]" value="@rcvData[tRow * 3 + i]" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+</div>
+
+
+
+
+
+
 
 @code {
     public int tRow = 16;
     public int tCol = 4;
+    public string slaveIP="127.0.0.1";
+    public ushort portNum=502;
     private ModbusService Service;
     private ModbusService.Server MBmaster;
     private byte[] rcvData = new byte[2048];
+    private bool isPolling = false;
 
 
     string ErrMsg;
@@ -109,7 +147,7 @@
     {
         //MBmaster = new ModbusService.Server("127.0.0.1", 502,true);
         MBmaster = new ModbusService.Server();
-        MBmaster.connect("127.0.0.1", 502, true);
+        MBmaster.connect(slaveIP, portNum, true);
 
         MBmaster.OnResponseData += new ModbusService.Server.ResponseData(MBmaster_OnResponseData);
         MBmaster.OnException += new ModbusService.Server.ExceptionData(MBmaster_OnException);
@@ -119,7 +157,7 @@
     {
         if (MBmaster != null)
         {
-            MBmaster.ReadHoldingRegister(3, 4, 0, 100);
+            MBmaster.ReadHoldingRegister(3, 0, 0, 100);
             await Task.Delay(10);
             StateHasChanged();
         }
@@ -129,4 +167,21 @@
         }
 
     }
+
+    async Task PollingData()
+    {
+        isPolling = true;
+        while (isPolling)
+        {
+            await GetData();
+            await Task.Delay(100);
+        }
+    }
+
+    async Task StopPolling()
+    {
+        isPolling = false;
+        await Task.Delay(100);
+    }
+
 }

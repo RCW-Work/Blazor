@@ -195,9 +195,12 @@ namespace BlazorSCADA.ModbusTCP
                     }
                     _connected = true;
                 }
-
+                catch (System.IO.IOException error)
+                {
+                    _connected = false;
+                    throw (error);
+                }
                 catch (SocketException error)
-                //catch (System.IO.IOException error)
                 {
                     _connected = false;
                     Console.WriteLine(error);
