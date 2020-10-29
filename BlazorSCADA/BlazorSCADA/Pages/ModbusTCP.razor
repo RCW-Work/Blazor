@@ -36,12 +36,12 @@
     else
     {
 <div>
-    <input type="button" class="btn-danger" value="GetData" @onclick="()=>GetData()" /><br />
+    <input type="button" class="btn-danger" value="GetData" @onclick="()=>GetData(0,100)" /><br />
     <input type="button" class="btn-danger" value="Polling" @onclick="()=>PollingData()" /><br />
     <input type="button" class="btn-block" value="StopPolling" @onclick="()=>StopPolling()" /><br />
     <input type="button" class="btn" value="Write" @onclick="()=>WriteData(0,123)" /><br />
-    <td><input type="text" name="TEST" @bind="testInput"  @bind:event="oninput"
-               
+    <td><input type="text" name="0" @bind="testInput"  
+               @bind:event="oninput"               
                @onkeypress="(KeyboardEventArgs e)=>Enter(e,0,testInput)" /></td>
 </div>
 
@@ -91,9 +91,13 @@
     public ushort portNum=502;
     private ModbusService Service;
     private ModbusService.Server MBmaster;
+    private int[] Address = new int[1024];
+    private int[] FeData = new int[1024];
     private byte[] rcvData = new byte[2048];
     private bool isPolling = false;
     public int testInput = 0;
+
+    private ModbusData[] mdData = new ModbusData[1024];
 
 
     string ErrMsg;
@@ -155,15 +159,16 @@
         MBmaster = new ModbusService.Server();
         MBmaster.connect(slaveIP, portNum, true);
 
+
         MBmaster.OnResponseData += new ModbusService.Server.ResponseData(MBmaster_OnResponseData);
         MBmaster.OnException += new ModbusService.Server.ExceptionData(MBmaster_OnException);
     }
 
-    async Task GetData()
+    async Task GetData( ushort startAddress, ushort numInputs)
     {
         if (MBmaster != null)
         {
-            MBmaster.ReadHoldingRegister(3, 0, 0, 100);
+            MBmaster.ReadHoldingRegister(3, 0, startAddress, numInputs);
             await Task.Delay(10);
             StateHasChanged();
         }
@@ -179,7 +184,7 @@
         isPolling = true;
         while (isPolling)
         {
-            await GetData();
+            await GetData(0,100);
             await Task.Delay(100);
         }
     }

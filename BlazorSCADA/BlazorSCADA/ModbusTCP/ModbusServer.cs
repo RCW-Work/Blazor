@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
@@ -21,8 +22,12 @@ namespace BlazorSCADA.ModbusTCP
 
 
     }
-    public class RcvData
-    { 
-    
+    public class ModbusData
+    {
+        public int Address { get;set; }
+        public int RcvData { get; set; }
+        public bool isWritable = true;
+        public bool isReadable = true;   
+        
     }
 }
