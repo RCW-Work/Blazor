@@ -94,8 +94,9 @@
     private ModbusService.Server MBmaster;
     private byte[] rcvData8 = new byte[2048];
     private int[] Address = new int[1024];
-    private int[] FeData = new int[1024];
+    private int[] inputData = new int[1024];
     private ushort[] rcvData16 = new ushort[1024];
+    
     private bool isPolling = false;
     public int testInput = 0;
     string ErrMsg;
@@ -105,7 +106,7 @@
 
     public static void ByteToU16Rev(byte[] input , ushort[] output, int index, int number)
     {
-        for (int i = 0;i< input.Length;i+=2)
+        for (int i = index; i< number; i+=2)
         {
             output[i >> 1] = (ushort)(input[i]<<8| input[i + 1] );
         }
@@ -177,7 +178,7 @@
     {
         if (MBmaster != null)
         {
-            MBmaster.ReadInputRegister(3, 0, startAddress, numInputs);
+            MBmaster.ReadHoldingRegister(3, 0, startAddress, numInputs);
             ByteToU16Rev(rcvData8, rcvData16, 0, numInputs);
             await Task.Delay(10);
             StateHasChanged();
@@ -219,7 +220,6 @@
     {
         if (e.Code == "Enter" | e.Code == "NumpadEnter")
         {
-
             byte[] Value = new byte[2];
             Value[0] = Convert.ToByte((Data >> 8) & 0xFF);
             Value[1] = Convert.ToByte(Data & 0xFF);
