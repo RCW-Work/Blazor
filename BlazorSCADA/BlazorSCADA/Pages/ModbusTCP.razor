@@ -1,4 +1,5 @@
 ﻿@using System;
+@using System.ComponentModel;
 @page "/modbus"
 @using BlazorSCADA.ModbusTCP
 
@@ -63,7 +64,7 @@
                 {
                     <tr>
                         <td>@(i)</td>
-                        <td><input type="text" name="array[]" value="@(rcvData16[i].)" /></td>
+                        <td><input type="text" name="array[]" value="@(rcvData16[i])" /></td>
                         <td>@(tRow*1+i)</td>
                         <td><input type="text" name="array[]" value="@rcvData16[tRow * 1 + i]" /></td>
                         <td>@(tRow * 2+i)</td>
@@ -101,9 +102,13 @@
     private ModbusMaster tempMaster;
 
 
-    public static void ByteToU16(byte[] input , ushort[] output, int index, int number)
+
+    public static void ByteToU16Rev(byte[] input , ushort[] output, int index, int number)
     {
-        Buffer.BlockCopy(input, 0, output, 0, number);
+        for (int i = 0;i< input.Length;i+=2)
+        {
+            output[i >> 1] = (ushort)(input[i]<<8| input[i + 1] );
+        }
     }
 
     private void MBmaster_OnException(ushort id, byte unit, byte function, byte exception)
@@ -172,8 +177,8 @@
     {
         if (MBmaster != null)
         {
-            MBmaster.ReadHoldingRegister(3, 0, startAddress, numInputs);
-            ByteToU16(rcvData8, rcvData16, 0, numInputs);
+            MBmaster.ReadInputRegister(3, 0, startAddress, numInputs);
+            ByteToU16Rev(rcvData8, rcvData16, 0, numInputs);
             await Task.Delay(10);
             StateHasChanged();
         }

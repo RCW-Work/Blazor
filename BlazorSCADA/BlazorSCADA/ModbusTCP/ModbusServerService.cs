@@ -396,6 +396,17 @@ namespace BlazorSCADA.ModbusTCP
                 values = WriteSyncData(CreateReadHeader(id, unit, startAddress, numInputs, fctReadInputRegister), id);
             }
 
+            public void ReadInputRegisterRev(ushort id, byte unit, ushort startAddress, ushort numInputs, ref byte[] values)
+            {
+                if (numInputs > 125)
+                {
+                    CallException(id, unit, fctReadInputRegister, excIllegalDataVal);
+                    return;
+                }
+                values = WriteSyncData(CreateReadHeader(id, unit, startAddress, numInputs, fctReadInputRegister), id);
+            }
+
+
             // ------------------------------------------------------------------------
             /// <summary>Write single coil in slave asynchronous. The result is given in the response function.</summary>
             /// <param name="id">Unique id that marks the transaction. In asynchonous mode this id is given to the callback function.</param>
