@@ -346,6 +346,17 @@ namespace BlazorSCADA.ModbusTCP
                 WriteAsyncData(CreateReadHeader(id, unit, startAddress, numInputs, fctReadHoldingRegister), id);
             }
 
+            public int intReadHoldingRegister(ushort id, byte unit, ushort startAddress, ushort numInputs)
+            {
+                if (numInputs > 125)
+                {
+                    CallException(id, unit, fctReadHoldingRegister, excIllegalDataVal);
+                    return -1;
+                }
+                WriteAsyncData(CreateReadHeader(id, unit, startAddress, numInputs, fctReadHoldingRegister), id);
+                return 0;
+            }
+
             // ------------------------------------------------------------------------
             /// <summary>Read holding registers from slave synchronous.</summary>
             /// <param name="id">Unique id that marks the transaction. In asynchonous mode this id is given to the callback function.</param>
@@ -501,6 +512,21 @@ namespace BlazorSCADA.ModbusTCP
                 data[10] = values[0];
                 data[11] = values[1];
                 WriteAsyncData(data, id);
+            }
+
+            public int intWriteSingleRegister(ushort id, byte unit, ushort startAddress, byte[] values)
+            {
+                if (values.GetUpperBound(0) != 1)
+                {
+                    CallException(id, unit, fctReadCoil, excIllegalDataVal);
+                    return -1;
+                }
+                byte[] data;
+                data = CreateWriteHeader(id, unit, startAddress, 1, 1, fctWriteSingleRegister);
+                data[10] = values[0];
+                data[11] = values[1];
+                WriteAsyncData(data, id);
+                return 0;
             }
 
             // ------------------------------------------------------------------------
