@@ -25,86 +25,79 @@
         </tbody>
     </table>
     <label>Error Message @ErrMsg</label><br />
-
+    <br />
+    <td><input class="text-black-50" @bind="dataNumbers" /></td>
 </div>
 
 
 <div>
     @if (MBmaster == null)
     {
-    <p><em>Loading...</em></p>
+        <p><em>Loading...</em></p>
     }
     else
     {
-    <div>
-        <input type="button" class="btn-danger" value="GetData" @onclick="()=>GetData(0,100)" /><br />
-        <input type="button" class="btn-danger" value="Polling" @onclick="()=>PollingData()" /><br />
-        <input type="button" class="btn-block" value="StopPolling" @onclick="()=>StopPolling()" /><br />
-        <input type="button" class="btn" value="Write" @onclick="()=>WriteData(0,123)" /><br />
-        <td>
-            <input type="text" name="0" @bind="testInput"
-                   @bind:event="oninput"
-                   @onkeypress="(KeyboardEventArgs e)=>Enter(e,2,testInput)" />
-        </td>
-    </div>
+        <div>
+            <input type="button" class="btn-danger" value="GetData" @onclick="()=>GetData(0,100)" />
+            <input type="button" class="btn-danger" value="Polling" @onclick="()=>PollingData()" />
+            <input type="button" class="btn-danger" value="StopPolling" @onclick="()=>StopPolling()" /><br />
+        </div>
+        <div>
+            <table>
+                <thead class="table-dark" align="center">
+                    <tr>
+                        <th width="100px">Index</th>
+                        <th width="100px">Data</th>
+                        <th width="100px">Index</th>
+                        <th width="100px">Data</th>
+                        <th width="100px">Index</th>
+                        <th width="100px">Data</th>
+                        <th width="100px">Index</th>
+                        <th width="100px">Data</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-    <table>
-        <thead class="table-dark" align="center">
-            <tr>
-                <th width="100px">Index</th>
-                <th width="100px">Data</th>
-                <th width="100px">Index</th>
-                <th width="100px">Data</th>
-                <th width="100px">Index</th>
-                <th width="100px">Data</th>
-                <th width="100px">Index</th>
-                <th width="100px">Data</th>
-            </tr>
-        </thead>
-        <tbody class="table-bordered">
-            @for (int i = 0; i < tRow; i++)
-                {
-            <tr>
-                <td>@(i)</td>
-                <td>
-                    <input type="text" value="@txtValue[0]"
-                           @onkeypress="(KeyboardEventArgs e)=>Enter(e,0,txtValue[0])" />
-                </td>
-                <td>@(tRow*1+i)</td>
-                <td><input type="text" name="array[]" value="@rcvData16[tRow * 1 + i]" /></td>
-                <td>@(tRow * 2+i)</td>
-                <td><input type="text" name="array[]" value="@rcvData16[tRow * 2 + i]" /></td>
-                <td>@(tRow * 3+i)</td>
-                <td><input type="text" name="array[]" value="@rcvData16[tRow * 3 + i]" /></td>
-            </tr>
-                }
-        </tbody>
-    </table>
-
-    <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Address</th>
-                    <th>Data</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var mbData in mbDataList)
+                    @foreach (var mbData in mbDataList)
                     {
-                <tr>
-                    <td>@mbData.Address</td>
-                    <td>
-                        <input type="text" name="array[]" @bind="@mbData.inputData"
-                               @bind:event="oninput"
-                               @onkeypress="(KeyboardEventArgs e)=>testEnter(e,mbData)"
-                               @onblur="()=>updataValue(mbData)" />
-                    </td>
-                </tr>
+                        if (mbData.Address / tRow == 0)
+                        {
+                            <tr>
+                                <td>@mbData.Address </td>
+                                <td>
+                                    <input type="text" name="@mbData.Address" @bind="@mbDataList[mbData.Address].inputData"
+                                           @bind:event="oninput"
+                                           @onkeypress="(KeyboardEventArgs e)=>testEnter(e,mbDataList[mbData.Address])"
+                                           @onblur="()=>updataValue(mbDataList[mbData.Address])" />
+                                </td>
+                                <td>@(mbData.Address + tRow * 1)</td>
+                                <td>
+                                    <input type="text" name="@mbData.Address" @bind="@mbDataList[mbData.Address+tRow * 1].inputData"
+                                           @bind:event="oninput"
+                                           @onkeypress="(KeyboardEventArgs e)=>testEnter(e,mbDataList[mbData.Address+tRow * 1 ])"
+                                           @onblur="()=>updataValue(mbDataList[mbData.Address+tRow * 1 ])" />
+                                </td>
+                                <td>@(mbData.Address + tRow * 2)</td>
+                                <td>
+                                    <input type="text" name="@mbData.Address" @bind="@mbDataList[mbData.Address+ tRow * 2].inputData"
+                                           @bind:event="oninput"
+                                           @onkeypress="(KeyboardEventArgs e)=>testEnter(e,mbDataList[mbData.Address+ tRow * 2])"
+                                           @onblur="()=>updataValue(mbDataList[mbData.Address+ tRow * 2])" />
+                                </td>
+                                <td>@(mbData.Address + tRow * 3 )</td>
+                                <td>
+                                    <input type="text" name="@mbData.Address" @bind="@mbDataList[mbData.Address+ tRow * 3].inputData"
+                                           @bind:event="oninput"
+                                           @onkeypress="(KeyboardEventArgs e)=>testEnter(e,mbDataList[mbData.Address+ tRow * 3])"
+                                           @onblur="()=>updataValue(mbDataList[mbData.Address+ tRow * 3])" />
+                                </td>
+                            </tr>
+                        }
+
                     }
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
     }
 </div>
 
@@ -112,19 +105,28 @@
 
 @code {
 
+
+
     public List<ModbusData> mbDataList { get; set; } = new List<ModbusData>();
 
     protected override void OnInitialized()
     {
+    }
+    private void initModbusDataList(int dataNumber)
+    {
+
         mbDataList = new List<ModbusData>()
         {
-            new ModbusData { Address = 0, revData=0, inputData=1 },
-            new ModbusData { Address = 1, revData=0, inputData=2 },
-            new ModbusData { Address = 2, revData=0, inputData=3 },
-            new ModbusData { Address = 3, revData=0, inputData=4 }
-
+            //new ModbusData { Address = 0, revData=0, inputData=0 },
+            //new ModbusData { Address = 1, revData=0, inputData=0 }
         };
+
+        for (int i = 0; i < dataNumberMax; i++)
+        {
+            mbDataList.Add(new ModbusData { Address = (ushort)i, revData = 0, inputData = 0 });
+        }
     }
+
 
     async Task testEnter(KeyboardEventArgs e, ModbusData input)
     {
@@ -145,11 +147,23 @@
         await Task.Delay(100);
         StateHasChanged();
     }
+    async Task updataAllValue(List<ModbusData> inputList)
+    {
+        await GetData(0, dataNumbers);
+        foreach (var input in inputList)
+        {
+            input.inputData = rcvData16[input.Address];
+        }
+        await Task.Delay(100);
+        StateHasChanged();
+    }
 
 
 
-    public int tRow = 4;
+    public int tRow = 8;
     public int tCol = 4;
+    public ushort dataNumbers = 32;
+    public ushort dataNumberMax = 1024;
     public string slaveIP = "127.0.0.1";
     public ushort portNum = 502;
     private ModbusService Service;
@@ -192,7 +206,6 @@
             case ModbusService.Server.excExceptionTimeout: exc += "Slave timed out!"; break;
             case ModbusService.Server.excExceptionConnectionLost: exc += "Connection is lost!"; break;
             case ModbusService.Server.excExceptionNotConnected: exc += "Not connected!"; break;
-
         }
         ErrMsg = exc;
     }
@@ -238,6 +251,7 @@
         }
         MBmaster.OnResponseData += new ModbusService.Server.ResponseData(MBmaster_OnResponseData);
         MBmaster.OnException += new ModbusService.Server.ExceptionData(MBmaster_OnException);
+        initModbusDataList(dataNumbers);
     }
 
     async Task GetData(ushort startAddress, ushort numInputs)
@@ -258,15 +272,18 @@
     async Task PollingData()
     {
         isPolling = true;
+        await GetData(0, dataNumbers);
+        await updataAllValue(mbDataList);
         while (isPolling)
         {
-            await GetData(0, 100);
+            await GetData(0, dataNumbers);
             for (int i = 0; i < rcvData16.Length; i++)
             {
                 txtValue[i] = (ushort)(rcvData16[i]);
             }
             await Task.Delay(10);
         }
+
     }
 
     async Task StopPolling()
@@ -274,6 +291,7 @@
         isPolling = false;
         await Task.Delay(100);
     }
+
     async Task WriteData(ushort startAddress, int Data)
     {
         byte[] Value = new byte[2];
@@ -283,22 +301,6 @@
         MBmaster.WriteSingleRegister(6, 0, startAddress, Value);
         await Task.Delay(100);
         StateHasChanged();
-    }
-
-    async Task Enter(KeyboardEventArgs e, int startAddress, int Data)
-    {
-
-        int temp = Data.GetHashCode();
-        if (e.Code == "Enter" | e.Code == "NumpadEnter")
-        {
-            byte[] Value = new byte[2];
-            Value[0] = Convert.ToByte((Data >> 8) & 0xFF);
-            Value[1] = Convert.ToByte(Data & 0xFF);
-            ushort tempAddress = (ushort)startAddress;
-            MBmaster.WriteSingleRegister(6, 0, tempAddress, Value);
-            await Task.Delay(100);
-            StateHasChanged();
-        }
     }
 
 }
