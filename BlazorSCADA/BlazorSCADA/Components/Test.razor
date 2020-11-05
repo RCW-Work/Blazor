@@ -2,7 +2,7 @@
 
 <p>Current count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="cbOnclick">Click me</button>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
     int currentCount = 0;
@@ -14,9 +14,41 @@
     [Parameter]
     public EventCallback<MouseEventArgs> cbOnclick { get; set; }
 
+    [Parameter]
+    public EventCallback<int> cbTest{ get; set; }
+
+
+
     void IncrementCount()
     {
         currentCount += IncrementAmount;
+        if (currentCount % 10 == 1)
+        {
+            cbTest.InvokeAsync(0);
+        }
     }
+    delegate void CustomAction();
+
+
+
+    private int currentCount2 = 0;
+
+    [Parameter]
+    public Action<int> OnMultipleOfTwoAction { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnMultipleOfThree { get; set; }
+
+    private async Task IncrementCount2()
+    {
+
+        if (currentCount2 % 2 == 0)
+            OnMultipleOfTwoAction?.Invoke(currentCount2);
+
+        if (currentCount2 % 3 == 0)
+            await OnMultipleOfThree.InvokeAsync(currentCount2);
+    }
+
+
 
 }

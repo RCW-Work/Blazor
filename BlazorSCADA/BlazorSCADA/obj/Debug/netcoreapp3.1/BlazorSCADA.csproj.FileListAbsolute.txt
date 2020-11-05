@@ -108,3 +108,9 @@ D:\GitHub-Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\Razor
 D:\GitHub-Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\Razor\Components\ComBtn.razor.g.cs
 D:\GitHub-Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\RazorDeclaration\Components\Test.razor.g.cs
 D:\GitHub-Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\Razor\Components\Test.razor.g.cs
+D:\GitHub_Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\RazorDeclaration\Components\ComBtn.razor.g.cs
+D:\GitHub_Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\RazorDeclaration\Components\Test.razor.g.cs
+D:\GitHub_Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Pratice.razor.g.cs
+D:\GitHub_Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\Razor\Components\ComBtn.razor.g.cs
+D:\GitHub_Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\Razor\Components\Test.razor.g.cs
+D:\GitHub_Workspace\Blazor\BlazorSCADA\BlazorSCADA\obj\Debug\netcoreapp3.1\Razor\Pages\Pratice.razor.g.cs
