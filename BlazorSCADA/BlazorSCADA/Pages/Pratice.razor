@@ -1,0 +1,12 @@
+﻿@page "/testpage"
+@using BlazorSCADA.Components
+<h3>pratice</h3>
+<ComBtn />
+<Test IncrementAmount="10" cbOnclick="(MouseEventArgs e)=>testFunction(e)"/>
+@code {
+    public void testFunction(MouseEventArgs e)
+    {
+        string test = e.ClientX.ToString();
+    }
+
+}

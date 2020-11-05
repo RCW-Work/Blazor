@@ -31,6 +31,8 @@ namespace BlazorSCADA.ModbusTCP
         public ushort inputData { get; set; }
         public bool isWritable { get; set; }
         public bool isReadable { get; set; }
+        public bool isFocus { get; set; }
+
 
     }
 }

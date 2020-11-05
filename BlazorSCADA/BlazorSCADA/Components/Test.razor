@@ -1,0 +1,22 @@
+﻿<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="cbOnclick">Click me</button>
+
+@code {
+    int currentCount = 0;
+
+    [Parameter]
+    public int IncrementAmount { get; set; } = 1;
+
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> cbOnclick { get; set; }
+
+    void IncrementCount()
+    {
+        currentCount += IncrementAmount;
+    }
+
+}

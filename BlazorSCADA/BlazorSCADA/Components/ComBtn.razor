@@ -1,0 +1,21 @@
+﻿
+
+<input type="button" class="@BtnClass" value="test" @onclick="()=>test()" />
+
+
+@code {
+    [Parameter]
+    public string BtnClass { get; set; } = "btn-danger";
+    [Parameter]
+    public bool isEnable { get; set; } = false;
+    public void test()
+    {
+        isEnable = !isEnable;
+
+        if (isEnable)
+            BtnClass = "btn-danger";
+        else
+            BtnClass = "btn-primary";
+    }
+
+}
