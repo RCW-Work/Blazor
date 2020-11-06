@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BDCzJYVSnJO6pDwfwvgvLX3PdhWV7jtkDAgosE06xGbDVcYihTI9aFAcGv0BNnMry9KOshtAo1uXpg3z3yMKew==",
+  "dgSpecHash": "DxVqY0vA7R2oGWJYjp5TFYvyGGn2v+L7DARGkwBPWoCgkYwJcaBhXmpF2VUDRA9a1bnbVBW36VMZIpRuQp55Kg==",
   "success": true,
-  "projectFilePath": "D:\\GitHub_Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
+  "projectFilePath": "D:\\GitHub-Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

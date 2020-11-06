@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub_Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj": {}
+    "D:\\GitHub-Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj": {}
   },
   "projects": {
-    "D:\\GitHub_Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj": {
+    "D:\\GitHub-Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub_Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
+        "projectUniqueName": "D:\\GitHub-Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
         "projectName": "BlazorSCADA",
-        "projectPath": "D:\\GitHub_Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
-        "packagesPath": "C:\\Users\\Richard\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub_Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\obj\\",
+        "projectPath": "D:\\GitHub-Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\BlazorSCADA.csproj",
+        "packagesPath": "C:\\Users\\Richard Wu\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub-Workspace\\Blazor\\BlazorSCADA\\BlazorSCADA\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Richard\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Richard Wu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

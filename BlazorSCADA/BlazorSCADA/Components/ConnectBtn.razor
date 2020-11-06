@@ -1,0 +1,34 @@
+﻿
+
+<input type="button" class="@Class" value="@Value" @onclick="isClickedFnc"/>
+
+
+@code {
+
+    public string Value { get; set; }
+    public string Class { get; set; } = "btn-black";
+
+    public bool isClicked { get; set; } = false;
+    [Parameter]
+    public string isClickedValue { get; set; }
+    [Parameter]
+    public string unClickedValue { get; set; }
+    [Parameter]
+    public EventCallback<MouseEventArgs> Onclick { get; set; }
+
+    private void isClickedFnc()
+    {
+        this.isClicked = !this.isClicked;
+
+        if (this.isClicked)
+        {
+            this.Class = "btn-danger";
+            this.Value = this.isClickedValue;
+        }
+        else
+        {
+            this.Class = "btn-primary";
+            this.Value = this.unClickedValue;
+        }
+    }
+}

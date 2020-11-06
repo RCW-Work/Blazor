@@ -2,7 +2,7 @@
 @using System.ComponentModel;
 @page "/modbus"
 @using BlazorSCADA.ModbusTCP
-
+@using BlazorSCADA.Components;
 
 
 <h3>ModbusTCP Server</h3>
@@ -20,8 +20,8 @@
             <tr>
                 <td><input class="text-black-50" @bind="slaveIP" /></td>
                 <td><input class="text-black-50" @bind="portNum" /></td>
-                <td><input type="button" class="@btnCalss" value="Connect" @onclick="()=>Connect()" /></td>
-                <td><input type="button" class="btn-dark" value="Disconnect" @onclick="()=>disConnect()" /></td>
+                <td><input type="button" class="btn-primary" value="Connect" @onclick="()=>Connect()" /></td>
+                <td><input type="button" class="btn-danger" value="Disconnect" @onclick="()=>disConnect()" /></td>
             </tr>
         </tbody>
     </table>
@@ -104,8 +104,6 @@
     }
 </div>
 
-
-
 @code {
     public ushort dataNumbers = 32;                     //Data Numbers
     public int tRow = 8;                                //Table Row
@@ -119,13 +117,7 @@
 
     private bool isPolling = false;                     //polling flag
     string ErrMsg;                                      //Error Message
-
-    public string[] btnValue = new string[10];
-    public string btnCalss = "btn-danger";
-
     public List<ModbusData> mbDataList { get; set; } = new List<ModbusData>();
-
-
 
     protected override void OnInitialized()
     {
@@ -213,7 +205,6 @@
         }
         MBmaster.OnResponseData += new ModbusService.Server.ResponseData(MBmaster_OnResponseData);
         MBmaster.OnException += new ModbusService.Server.ExceptionData(MBmaster_OnException);
-        btnCalss = "btn-dark";
         initModbusDataList(dataNumbers);
     }
     private void disConnect()
